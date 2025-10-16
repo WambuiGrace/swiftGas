@@ -1,6 +1,17 @@
 {
 	"dependencies": {
 		"@supabase/supabase-js": "^2.75.0",
-		"axios": "^1.12.2"
+		"axios": "^1.12.2",
+		"dotenv": "^17.2.3"
+	},
+	"scripts": {
+		"test": "node --test",
+		"supabase:init": "npx supabase init --workdir ./shared/supabase",
+		"supabase:link": "npx supabase link --project-ref %SUPABASE_PROJECT_REF% --workdir ./shared/supabase",
+		"db:push": "npx supabase db push --workdir ./shared/supabase",
+		"db:start:local": "npx supabase start --workdir ./shared/supabase",
+		"db:reset:local": "npx supabase db reset --workdir ./shared/supabase",
+		"db:query:users": "npx supabase db query --file ./supabase/migrations/001_init-users.sql --workdir ./shared/supabase",
+		"db:query:orders": "npx supabase db query --file ./supabase/migrations/002_init-orders.sql --workdir ./shared/supabase"
 	}
 }
