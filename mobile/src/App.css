@@ -1,14 +1,16 @@
-/* @import "tailwindcss";
+/* Main App Styles - Tailwind v4 */
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities; */
-
-
-/* Main App Styles */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Custom Theme Variables */
+@theme {
+  --color-primary: #FF6B35;
+  --color-primary-dark: #e05a2a;
+  --color-secondary: #004E89;
+  --color-background: #F7F9FC;
+  --color-success: #10B981;
+  --color-error: #EF4444;
+  --color-warning: #F59E0B;
+}
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {

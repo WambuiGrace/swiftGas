@@ -98,104 +98,102 @@ export const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-md">
-        {/* Logo */}
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-3">
-            <span className="text-3xl">🔥</span>
+        <div className="bg-white rounded-2xl shadow-xl p-8">
+          {/* Logo & Title */}
+          <div className="text-center mb-6">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-orange-400 to-red-500 rounded-full mb-4 shadow-lg">
+              <span className="text-4xl">🔥</span>
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Join SwiftGas</h1>
+            <p className="text-gray-500 text-sm">Create your account</p>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h1>
-          <p className="text-gray-600">Join SwiftGas today</p>
-        </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-lg p-6 space-y-4">
           {errors.general && (
-            <div className="p-3 bg-error/10 border border-error rounded-lg">
-              <p className="text-error text-sm">{errors.general}</p>
+            <div className="p-3 bg-red-50 border border-red-200 rounded-lg mb-4">
+              <p className="text-red-600 text-sm text-center">{errors.general}</p>
             </div>
           )}
 
-          <Input
-            label="Full Name"
-            name="fullName"
-            type="text"
-            placeholder="Enter your full name"
-            value={formData.fullName}
-            onChange={handleChange}
-            error={errors.fullName}
-            required
-          />
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <Input
+              label="Full Name"
+              name="fullName"
+              type="text"
+              placeholder="Enter your full name"
+              value={formData.fullName}
+              onChange={handleChange}
+              error={errors.fullName}
+              required
+            />
 
-          <Input
-            label="Email"
-            name="email"
-            type="email"
-            placeholder="Enter your email"
-            value={formData.email}
-            onChange={handleChange}
-            error={errors.email}
-            required
-          />
+            <Input
+              label="Email"
+              name="email"
+              type="email"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={handleChange}
+              error={errors.email}
+              required
+            />
 
-          <Input
-            label="Phone Number"
-            name="phone"
-            type="tel"
-            placeholder="+254 or 07XX XXX XXX"
-            value={formData.phone}
-            onChange={handleChange}
-            error={errors.phone}
-            required
-          />
+            <Input
+              label="Phone Number"
+              name="phone"
+              type="tel"
+              placeholder="+254 or 07XX XXX XXX"
+              value={formData.phone}
+              onChange={handleChange}
+              error={errors.phone}
+              required
+            />
 
-          {/* Role notice: drivers cannot sign up */}
-          <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-sm text-blue-800">
-              Account type is <span className="font-semibold">Customer</span>. Drivers cannot create accounts — please use <span className="font-semibold">Sign In</span>.
+            <Input
+              label="Password"
+              name="password"
+              type="password"
+              placeholder="At least 6 characters"
+              value={formData.password}
+              onChange={handleChange}
+              error={errors.password}
+              required
+            />
+
+            <Input
+              label="Confirm Password"
+              name="confirmPassword"
+              type="password"
+              placeholder="Re-enter your password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              error={errors.confirmPassword}
+              required
+            />
+
+            <Button
+              type="submit"
+              fullWidth
+              size="lg"
+              loading={loading}
+              disabled={loading}
+            >
+              Create Account
+            </Button>
+          </form>
+
+          {/* Sign In Link */}
+          <div className="mt-6 text-center">
+            <p className="text-sm text-gray-600">
+              Already have an account?{' '}
+              <Link to={ROUTES.LOGIN} className="text-orange-500 font-semibold hover:text-orange-600 transition-colors">
+                Sign In
+              </Link>
             </p>
           </div>
-
-          <Input
-            label="Password"
-            name="password"
-            type="password"
-            placeholder="At least 6 characters"
-            value={formData.password}
-            onChange={handleChange}
-            error={errors.password}
-            required
-          />
-
-          <Input
-            label="Confirm Password"
-            name="confirmPassword"
-            type="password"
-            placeholder="Re-enter your password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            error={errors.confirmPassword}
-            required
-          />
-
-          <Button
-            type="submit"
-            fullWidth
-            size="lg"
-            loading={loading}
-            disabled={loading}
-          >
-            Create Account
-          </Button>
-
-          <p className="text-center text-sm text-gray-600 mt-4">
-            Already have an account?{' '}
-            <Link to={ROUTES.LOGIN} className="text-primary font-semibold hover:underline">
-              Sign In
-            </Link>
-          </p>
-        </form>
+        </div>
       </div>
     </div>
   );
