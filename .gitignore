@@ -185,3 +185,6 @@ coverage-*/
 
 # Ignore build artifacts produced by tools
 .DIR_*/
+
+# Ignore github guide
+.GitHub/
