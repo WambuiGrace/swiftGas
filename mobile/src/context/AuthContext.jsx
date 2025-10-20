@@ -2,6 +2,7 @@ import { createContext, useEffect, useState, useCallback } from 'react';
 import { authService, dbService } from '../services/supabase';
 import { STORAGE_KEYS, ROLES } from '../constants';
 
+/* eslint-disable react-refresh/only-export-components */
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {

@@ -58,7 +58,7 @@ export const Login = () => {
           navigate(ROUTES.DRIVER_DASHBOARD);
         }
       }, 100);
-    } catch (error) {
+    } catch {
       setErrors({ general: 'An unexpected error occurred. Please try again.' });
     } finally {
       setLoading(false);

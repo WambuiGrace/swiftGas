@@ -1,36 +1,47 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
-import { ROUTES, STORAGE_KEYS } from '../../constants';
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { ROUTES, STORAGE_KEYS } from '../../constants'
+import { useAuth } from '../../hooks/useAuth'
 
 export const Splash = () => {
-  const navigate = useNavigate();
-  const { isAuthenticated, isCustomer, isDriver, loading } = useAuth();
+  const navigate = useNavigate()
+  const { isAuthenticated, isCustomer, isDriver, loading } = useAuth()
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (loading) return;
-
-      const onboardingComplete = localStorage.getItem(STORAGE_KEYS.ONBOARDING_COMPLETE);
-
-      if (isAuthenticated) {
-        // Redirect to appropriate dashboard based on role
-        if (isCustomer) {
-          navigate(ROUTES.CUSTOMER_HOME);
-        } else if (isDriver) {
-          navigate(ROUTES.DRIVER_DASHBOARD);
-        } else {
-          navigate(ROUTES.LOGIN);
-        }
-      } else if (onboardingComplete) {
-        navigate(ROUTES.LOGIN);
-      } else {
-        navigate(ROUTES.ONBOARDING);
+      // Fallback: if still loading after splash delay, route to login/onboarding
+      if (loading) {
+        const onboardingComplete = localStorage.getItem(STORAGE_KEYS.ONBOARDING_COMPLETE)
+        navigate(onboardingComplete ? ROUTES.LOGIN : ROUTES.ONBOARDING)
+        return
       }
-    }, 2000);
 
-    return () => clearTimeout(timer);
-  }, [navigate, isAuthenticated, isCustomer, isDriver, loading]);
+      const onboardingComplete = localStorage.getItem(STORAGE_KEYS.ONBOARDING_COMPLETE)
+      if (!onboardingComplete) {
+        navigate(ROUTES.ONBOARDING)
+        return
+      }
+
+      if (!isAuthenticated) {
+        navigate(ROUTES.LOGIN)
+        return
+      }
+
+      if (isCustomer) {
+        navigate(ROUTES.CUSTOMER_HOME)
+        return
+      }
+
+      if (isDriver) {
+        navigate(ROUTES.DRIVER_DASHBOARD)
+        return
+      }
+
+      navigate(ROUTES.LOGIN)
+    }, 2000)
+
+    return () => clearTimeout(timer)
+  }, [navigate, isAuthenticated, isCustomer, isDriver, loading])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary to-secondary flex items-center justify-center px-4">
@@ -76,4 +87,4 @@ export const Splash = () => {
       </div>
     </div>
   );
-};
+}

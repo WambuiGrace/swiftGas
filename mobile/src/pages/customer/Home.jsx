@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { Header } from '../../components/common/Header';
@@ -17,11 +17,7 @@ export const CustomerHome = () => {
   const [safetyTip, setSafetyTip] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       // Fetch recent orders
       const { data: ordersData } = await dbService.getCustomerOrders(userProfile?.id);
@@ -39,7 +35,11 @@ export const CustomerHome = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [userProfile?.id]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
   const tabs = [
     { path: ROUTES.CUSTOMER_HOME, label: 'Home', icon: '🏠' },
