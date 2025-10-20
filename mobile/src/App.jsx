@@ -8,6 +8,7 @@ import { Splash } from './pages/common/Splash';
 import { Onboarding } from './pages/common/Onboarding';
 import { Login } from './pages/common/Login';
 import { Signup } from './pages/common/Signup';
+import { EmailConfirm } from './pages/common/EmailConfirm';
 
 // Customer Pages
 import { CustomerHome } from './pages/customer/Home';
@@ -31,6 +32,7 @@ function App() {
           <Route path={ROUTES.ONBOARDING} element={<Onboarding />} />
           <Route path={ROUTES.LOGIN} element={<Login />} />
           <Route path={ROUTES.SIGNUP} element={<Signup />} />
+          <Route path={ROUTES.AUTH_CONFIRM} element={<EmailConfirm />} />
 
           {/* Customer Routes */}
           <Route

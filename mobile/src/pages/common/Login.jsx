@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { Button } from '../../components/common/Button';
 import { Input } from '../../components/common/Input';
@@ -11,8 +11,24 @@ export const Login = () => {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
   const { signIn, isCustomer, isDriver } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Check for success message from signup or email confirmation
+  useEffect(() => {
+    if (location.state?.message) {
+      setSuccessMessage(location.state.message);
+      // Pre-fill email if provided
+      if (location.state.email) {
+        setEmail(location.state.email);
+      }
+      // Clear the message after 5 seconds
+      const timer = setTimeout(() => setSuccessMessage(''), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [location.state]);
 
   const validate = () => {
     const newErrors = {};
@@ -79,6 +95,12 @@ export const Login = () => {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-lg p-6 space-y-4">
+          {successMessage && (
+            <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+              <p className="text-green-700 text-sm">{successMessage}</p>
+            </div>
+          )}
+
           {errors.general && (
             <div className="p-3 bg-error/10 border border-error rounded-lg">
               <p className="text-error text-sm">{errors.general}</p>

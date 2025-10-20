@@ -14,11 +14,17 @@ function createSupabaseClient(url, key, options = {}) {
 function createAuthService(supabase) {
   return {
     signUp: async (email, password, userData) => {
+      // Get the redirect URL from environment or use current origin
+      const redirectUrl = typeof window !== 'undefined' 
+        ? `${window.location.origin}/auth/confirm`
+        : 'http://localhost:5173/auth/confirm';
+
       return supabase.auth.signUp({
         email,
         password,
         options: {
           data: userData,
+          emailRedirectTo: redirectUrl,
         },
       });
     },

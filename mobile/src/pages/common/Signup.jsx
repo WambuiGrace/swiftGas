@@ -82,13 +82,22 @@ export const Signup = () => {
       const { error } = await signUp(formData.email, formData.password, userData);
 
       if (error) {
-        setErrors({ general: error.message || 'Failed to create account. Please try again.' });
+        // Check for specific error codes
+        if (error.code === 'DRIVER_SIGNUP_FORBIDDEN') {
+          setErrors({ general: 'Drivers cannot create accounts. Please sign in instead.' });
+        } else {
+          setErrors({ general: error.message || 'Failed to create account. Please try again.' });
+        }
         return;
       }
 
-      // Show success message and redirect to login
-      alert('Account created successfully! Please check your email to verify your account.');
-      navigate(ROUTES.LOGIN);
+      // Show success message and redirect to login with state
+      navigate(ROUTES.LOGIN, { 
+        state: { 
+          message: 'Account created successfully! Please check your email to verify your account.',
+          email: formData.email 
+        } 
+      });
     } catch (err) {
       console.error('Signup error:', err);
       setErrors({ general: 'An unexpected error occurred. Please try again.' });

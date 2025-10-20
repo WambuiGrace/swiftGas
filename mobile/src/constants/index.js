@@ -36,6 +36,7 @@ export const ROUTES = {
   ONBOARDING: '/onboarding',
   LOGIN: '/login',
   SIGNUP: '/signup',
+  AUTH_CONFIRM: '/auth/confirm',
   
   // Customer routes
   CUSTOMER_HOME: '/customer/home',
