@@ -76,7 +76,7 @@ export const Signup = () => {
       const userData = {
         full_name: formData.fullName,
         phone: formData.phone,
-        role: formData.role,
+        role: ROLES.CUSTOMER, // Force role to customer
       };
 
       const { error } = await signUp(formData.email, formData.password, userData);
@@ -150,37 +150,11 @@ export const Signup = () => {
             required
           />
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              I am a <span className="text-error">*</span>
-            </label>
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                type="button"
-                onClick={() => setFormData((prev) => ({ ...prev, role: ROLES.CUSTOMER }))}
-                className={`p-4 rounded-lg border-2 transition-all ${
-                  formData.role === ROLES.CUSTOMER
-                    ? 'border-primary bg-primary/5 text-primary'
-                    : 'border-gray-300 text-gray-600 hover:border-gray-400'
-                }`}
-              >
-                <div className="text-3xl mb-2">👤</div>
-                <div className="font-semibold">Customer</div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setFormData((prev) => ({ ...prev, role: ROLES.DRIVER }))}
-                className={`p-4 rounded-lg border-2 transition-all ${
-                  formData.role === ROLES.DRIVER
-                    ? 'border-primary bg-primary/5 text-primary'
-                    : 'border-gray-300 text-gray-600 hover:border-gray-400'
-                }`}
-              >
-                <div className="text-3xl mb-2">🚚</div>
-                <div className="font-semibold">Driver</div>
-              </button>
-            </div>
+          {/* Role notice: drivers cannot sign up */}
+          <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-sm text-blue-800">
+              Account type is <span className="font-semibold">Customer</span>. Drivers cannot create accounts — please use <span className="font-semibold">Sign In</span>.
+            </p>
           </div>
 
           <Input

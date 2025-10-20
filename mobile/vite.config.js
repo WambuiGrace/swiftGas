@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import path from 'node:path'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -50,4 +51,18 @@ export default defineConfig({
       }
     })
   ],
+  // Load env from repo root
+  envDir: path.resolve(__dirname, '..'),
+  // Resolve shared package when not using pnpm link
+  resolve: {
+    alias: {
+      shared: path.resolve(__dirname, '../shared')
+    }
+  },
+  // Allow importing files from repo root
+  server: {
+    fs: {
+      allow: [path.resolve(__dirname, '..')]
+    }
+  }
 })

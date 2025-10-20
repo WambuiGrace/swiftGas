@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState, useCallback } from 'react';
 import { authService, dbService } from '../services/supabase';
-import { STORAGE_KEYS } from '../constants';
+import { STORAGE_KEYS, ROLES } from '../constants';
 
 export const AuthContext = createContext({});
 
@@ -84,6 +84,14 @@ export const AuthProvider = ({ children }) => {
   const signUp = async (email, password, userData) => {
     setLoading(true);
     try {
+      // Enforce business rule: drivers cannot create accounts
+      const desiredRole = userData?.role;
+      if (desiredRole === ROLES.DRIVER || desiredRole === 'driver') {
+        const error = new Error('Drivers cannot create accounts. Please sign in.');
+        error.code = 'DRIVER_SIGNUP_FORBIDDEN';
+        throw error;
+      }
+
       const { data, error } = await authService.signUp(email, password, userData);
       
       if (error) throw error;
