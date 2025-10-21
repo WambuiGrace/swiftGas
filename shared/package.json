@@ -7,12 +7,20 @@
 	},
 	"scripts": {
 		"test": "node --test",
-		"supabase:init": "npx supabase init --workdir ./shared/supabase",
-		"supabase:link": "npx supabase link --project-ref %SUPABASE_PROJECT_REF% --workdir ./shared/supabase",
-		"db:push": "npx supabase db push --workdir ./shared/supabase",
-		"db:start:local": "npx supabase start --workdir ./shared/supabase",
-		"db:reset:local": "npx supabase db reset --workdir ./shared/supabase",
-		"db:query:users": "npx supabase db query --file ./supabase/migrations/001_init-users.sql --workdir ./shared/supabase",
-		"db:query:orders": "npx supabase db query --file ./supabase/migrations/002_init-orders.sql --workdir ./shared/supabase"
+		"supabase:login": "npx supabase login",
+		"supabase:init": "npx supabase init --workdir ./supabase",
+		"supabase:link": "npx supabase link --workdir ./supabase",
+		"supabase:status": "npx supabase migration list --workdir ./supabase",
+		"db:push": "npx supabase db push --workdir ./supabase",
+		"db:push:dry": "npx supabase db push --dry-run --workdir ./supabase",
+		"db:start:local": "npx supabase start --workdir ./supabase",
+		"db:stop:local": "npx supabase stop --workdir ./supabase",
+		"db:reset:local": "npx supabase db reset --workdir ./supabase",
+		"db:diff": "npx supabase db diff --workdir ./supabase",
+		"db:query:users": "npx supabase db query --file ./supabase/migrations/001_init-users.sql --workdir ./supabase",
+		"db:query:orders": "npx supabase db query --file ./supabase/migrations/002_init-orders.sql --workdir ./supabase"
+	},
+	"devDependencies": {
+		"supabase": "^2.53.6"
 	}
 }

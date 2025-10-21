@@ -1,21 +1,19 @@
-// Load env from the repo root
-const path = require('node:path');
-const fs = require('node:fs');
-const dotenv = require('dotenv');
+import path from 'node:path';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import dotenv from 'dotenv';
+import test from 'node:test';
+import assert from 'node:assert';
+import { createClient } from '@supabase/supabase-js';
 
-const envFile =
-  process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';
+// Resolve repo-root env file
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';
 const envPath = path.resolve(__dirname, '../../', envFile);
 if (fs.existsSync(envPath)) {
   dotenv.config({ path: envPath });
 }
-
-// Basic assertions and test runner
-const test = require('node:test');
-const assert = require('node:assert');
-
-// Supabase
-const { createClient } = require('@supabase/supabase-js');
 
 // Helper to create client with service role
 function makeClient() {
