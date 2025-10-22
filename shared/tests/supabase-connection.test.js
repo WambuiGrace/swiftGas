@@ -128,6 +128,11 @@ test('Can reach PostgREST and list audit_logs table (count-only)', async () => {
   await testTableAccess('audit_logs', 'log_id');
 });
 
+// Migration 020 - miscellaneous
+test('Can reach PostgREST and list miscellaneous table (count-only)', async () => {
+  await testTableAccess('miscellaneous', 'misc_id');
+});
+
 // Summary test - check all tables exist
 test('All expected tables exist in database', async () => {
   const supabase = makeClient();
@@ -151,7 +156,8 @@ test('All expected tables exist in database', async () => {
     'support_agents',             // 016
     'reviews',                    // 017 - Customer reviews/ratings
     'system_settings',            // 018
-    'audit_logs'                  // 019
+    'audit_logs',                 // 019
+    'miscellaneous'               // 020 - Flexible miscellaneous data
   ];
 
   let accessibleCount = 0;
